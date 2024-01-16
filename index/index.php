@@ -1,3 +1,22 @@
+<?php
+session_start();
+
+// Fungsi logout
+if (isset($_POST['logout'])) {
+    session_unset();
+    session_destroy();
+    header("Location: ../login/login.php");
+    exit();
+}
+
+// Cek apakah pengguna sudah login
+if (!isset($_SESSION['username'])) {
+    header("Location: ../login/login.php");
+    exit();
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -40,7 +59,7 @@
             <span class="text">Produk</span>
           </a>
         </li>
-        <li>
+        <!-- <li>
           <a href="../pemeriksaan/pemeriksaan.php">
             <i class="bx bxs-data"></i>
             <span class="text">Pemeriksaan</span>
@@ -50,7 +69,7 @@
           <a href="../pet/pet.php">
             <i class="bx bxs-data"></i>
             <span class="text">Pet</span>
-          </a>
+          </a> -->
         </li>
         <li>
           <a href="../pelanggan/pelanggan.php">
@@ -64,14 +83,20 @@
             <span class="text">Transaksi</span>
           </a>
         </li>
-      </ul>
-      <ul class="side-menu">
         <li>
-          <a href="#" class="logout">
-            <i class="bx bxs-log-out-circle"></i>
-            <span class="text">Logout</span>
+          <a href="../user/user.php">
+            <i class="bx bxs-data"></i>
+            <span class="text">User</span>
           </a>
         </li>
+      </ul>
+      <ul class="side-menu">
+      <li>
+            <a href="../logout/logout.php" class="logout">
+                <i class='bx bxs-log-out-circle'></i>
+                <span class="text">Logout</span>
+            </a>
+      </li>
       </ul>
     </section>
     <!-- SIDEBAR -->
@@ -118,21 +143,22 @@
         <?php
         require '../config/conn.php';
 
-        // Query untuk menghitung jumlah transaksi
-        $result = mysqli_query($conn, "SELECT COUNT(*) AS jumlah FROM transaksi");
+        // Query untuk menghitung jumlah transaksi yang belum dihapus
+        $result = mysqli_query($conn, "SELECT COUNT(*) AS jumlah FROM transaksi WHERE is_deleted != 'Y'");
         $row = mysqli_fetch_assoc($result);
         $jumlahTransaksi = $row['jumlah'];
 
-        // Query untuk menghitung jumlah pelanggan
-        $result = mysqli_query($conn, "SELECT COUNT(*) AS jumlah FROM pelanggan");
+        // Query untuk menghitung jumlah pelanggan yang belum dihapus
+        $result = mysqli_query($conn, "SELECT COUNT(*) AS jumlah FROM pelanggan WHERE is_deleted != 'Y'");
         $row = mysqli_fetch_assoc($result);
         $jumlahPelanggan = $row['jumlah'];
 
-        // Query untuk menghitung jumlah pegawai
-        $result = mysqli_query($conn, "SELECT COUNT(*) AS jumlah FROM pegawai");
+        // Query untuk menghitung jumlah pegawai yang belum dihapus
+        $result = mysqli_query($conn, "SELECT COUNT(*) AS jumlah FROM pegawai WHERE is_deleted != 'Y'");
         $row = mysqli_fetch_assoc($result);
         $jumlahPegawai = $row['jumlah'];
         ?>
+
 
         <ul class="box-info">
             <li>
@@ -159,7 +185,7 @@
         </ul>
 
 
-        <<div class="table-data">
+        <div class="table-data">
           <div class="order">
           <div class="head">
               <h3>Transaksi Hari Ini</h3>
@@ -229,7 +255,7 @@
       <!-- MAIN -->
     </section>
     <!-- CONTENT -->
-
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../script.js"></script>
   </body>
 </html>

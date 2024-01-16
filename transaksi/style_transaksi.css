@@ -572,8 +572,30 @@ body {
 }
 
 
+/* Tambahkan di file CSS Anda */
+.form-container select {
+	width: 100%;
+	padding: 10px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	border-radius: 4px;
+	font-size: 16px;
+ }
 
+ .swal2-popup {
+	border-radius: 30px;
+	background-color: var(--light);
+  }
+  
+  /* Mengubah warna ikon */
 
+  
+  /* Mengubah warna teks judul */
+  .swal2-title {
+	color: var(--dark);
+  }
 
 
 @media screen and (max-width: 768px) {
